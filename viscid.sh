@@ -255,7 +255,3 @@ check_environment
 check_files
 
 run_docker_container
-
-#BASE_DIR
-#if [ ! -d "files"]
-#docker run -it --mount type=bind,source="/Users/spindler/guige/ubuntu/22.04.2/files,target=/root/guige/22.04.2/files" 

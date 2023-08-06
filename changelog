@@ -1,0 +1,10 @@
+# 0.0.1: Sun  6 Aug 2023 12:57:41 AEST
+# Initial shell
+# 0.0.2: Sun  6 Aug 2023 14:33:37 AEST
+# Added check for docker container
+# 0.0.3: Sun  6 Aug 2023 14:56:08 AEST
+# Added docker compose files
+# 0.0.4: Sun  6 Aug 2023 16:36:39 AEST
+# Added ldconfig to docker command to load libraries
+# 0.0.5: Sun  6 Aug 2023 17:05:13 AEST
+# Improved docker execution

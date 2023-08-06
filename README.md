@@ -20,6 +20,8 @@ If only the input file is specified, the script with create an output file with 
 
 The script with use the input and output file directories as loop back mounts.
 
+If the Docker container does not exist the script with create the relevant files and create the container.
+
 Examples
 --------
 
@@ -86,6 +88,32 @@ Linux Docker Container:
 - libvisio-dev
 - libvisio-doc
 - libvisio-tools
+
+Docker
+------
+
+The script generates a Docker file like this if it doesn't exist:
+
+```
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y gsfonts make cmake build-essential git libemf* libwmf* librevenge* libvisio* && git clone https://github.com/kakwa/libvisio2svg.git && cd libvisio2svg && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make install
+```
+
+The script creates a compose file like this if it doesn't exist:
+
+```
+version: "3"
+
+services:
+  viscid:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: viscid
+    container_name: viscid
+    entrypoint: /bin/bash
+    working_dir: /root
+```
 
 License
 -------

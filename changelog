@@ -8,3 +8,5 @@
 # Added ldconfig to docker command to load libraries
 # 0.0.5: Sun  6 Aug 2023 17:05:13 AEST
 # Improved docker execution
+# 0.0.6: Sun  6 Aug 2023 17:51:46 AEST
+# Clean up after running shellcheck

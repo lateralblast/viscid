@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Name:         viscid (Visio Image Svg Convertor In Docker)
-# Version:      0.0.5
+# Version:      0.0.6
 # Release:      1
 # License:      CC-BA (Creative Commons By Attribution)
 #               http://creativecommons.org/licenses/by/4.0/legalcode
@@ -14,15 +14,12 @@
 # Description:  Shell script designed to use Docker to be able to run libvisio2svg on MacOS
 
 SCRIPT_ARGS="$*"
-SCRIPT_FILE="$0"
 START_PATH=$( pwd )
-SCRIPT_BIN=$( basename "$0" |sed "s/^\.\///g" )
 
 # Default variables
 
 SCRIPT_NAME="viscid"
 WORK_DIR="$START_PATH/files"
-DOCKER_WORK_DIR="/root/files"
 VERBOSE_MODE="false"
 UBUNTU_VERSION="22.04"
 GIT_URL="https://github.com/kakwa/libvisio2svg.git"
@@ -105,18 +102,18 @@ check_docker_files() {
     echo "RUN apt-get update && apt-get install -y gsfonts make cmake build-essential git libemf* libwmf* librevenge* libvisio* && git clone $GIT_URL && cd libvisio2svg && cmake . -DCMAKE_INSTALL_PREFIX=/usr/local && make install" >> "$DOCKER_FILE"
   fi
   if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "version: \"3\"" > $COMPOSE_FILE
-    echo "" >> $COMPOSE_FILE
-    echo "services:" >> $COMPOSE_FILE
-    echo "  $SCRIPT_NAME:" >> $COMPOSE_FILE
-    echo "    build:" >> $COMPOSE_FILE
-    echo "      context: ." >> $COMPOSE_FILE
-    echo "      dockerfile: Dockerfile" >> $COMPOSE_FILE
-    echo "    image: $SCRIPT_NAME" >> $COMPOSE_FILE
-    echo "    container_name: $SCRIPT_NAME" >> $COMPOSE_FILE
-    echo "    entrypoint: /bin/bash" >> $COMPOSE_FILE
-    echo "    working_dir: /root" >> $COMPOSE_FILE
-    echo "" >> $COMPOSE_FILE
+    echo "version: \"3\"" > "$COMPOSE_FILE"
+    echo "" >> "$COMPOSE_FILE"
+    echo "services:" >> "$COMPOSE_FILE"
+    echo "  $SCRIPT_NAME:" >> "$COMPOSE_FILE"
+    echo "    build:" >> "$COMPOSE_FILE"
+    echo "      context: ." >> "$COMPOSE_FILE"
+    echo "      dockerfile: Dockerfile" >> "$COMPOSE_FILE"
+    echo "    image: $SCRIPT_NAME" >> "$COMPOSE_FILE"
+    echo "    container_name: $SCRIPT_NAME" >> "$COMPOSE_FILE"
+    echo "    entrypoint: /bin/bash" >> "$COMPOSE_FILE"
+    echo "    working_dir: /root" >> "$COMPOSE_FILE"
+    echo "" >> "$COMPOSE_FILE"
   fi
   return
 }
@@ -127,7 +124,7 @@ check_docker_container() {
   DOCKER_TEST=$( docker images |awk '{print $1}' |grep "$SCRIPT_NAME" )
   if [ ! "$DOCKER_TEST" ]; then 
     check_docker_files
-    docker build $WORK_DIR --tag $SCRIPT_NAME
+    docker build "$WORK_DIR" --tag "$SCRIPT_NAME"
   fi
   return
 }
@@ -136,7 +133,7 @@ check_docker_container() {
 
 check_work_dir() {
   if [ ! -d "$WORK_DIR" ]; then
-    mdkir -p $WORK_DIR
+    mdkir -p "$WORK_DIR"
   fi
   return
 }
@@ -153,13 +150,13 @@ check_environment() {
 
 check_files() {
   if [ "$INPUT_FILE" ]; then
-    INPUT_DIR=$( dirname $INPUT_FILE )
+    INPUT_DIR=$( dirname "$INPUT_FILE" )
   fi
   if [ "$OUTPUT_FILE" = "" ]; then
     OUTPUT_FILE="$INPUT_FILE.svg"
   fi
   if [ "$OUTPUT_FILE" ]; then
-    OUTPUT_DIR=$( dirname $OUTPUT_FILE )
+    OUTPUT_DIR=$( dirname "$OUTPUT_FILE" )
   fi
   if [ ! -d "$INPUT_DIR" ]; then
     VERBOSE_MODE="true"
@@ -183,8 +180,8 @@ check_files() {
   fi
   handle_output "Input:  $INPUT_FILE"
   handle_output "Output: $INPUT_FILE"
-  BASE_INPUT_FILE=$( basename $INPUT_FILE )
-  BASE_OUTPUT_FILE=$( basename $OUTPUT_FILE )
+  BASE_INPUT_FILE=$( basename "$INPUT_FILE" )
+  BASE_OUTPUT_FILE=$( basename "$OUTPUT_FILE" )
   DOCKER_INPUT_DIR="/root/input"
   DOCKER_OUTPUT_DIR="/root/output"
   DOCKER_INPUT_FILE="$DOCKER_INPUT_DIR/$BASE_INPUT_FILE"
@@ -216,7 +213,6 @@ do
       ;;
     -h|--help)
       print_help
-      shift
       ;;
     -i|--input)
       INPUT_FILE=$2

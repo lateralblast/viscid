@@ -8,7 +8,7 @@ Visio Image SVG Convertor In Docker
 Version
 -------
 
-Current Version: 0.0.3
+Current Version: 0.0.5
 
 Introduction
 ------------
@@ -86,4 +86,11 @@ Linux Docker Container:
 - libvisio-dev
 - libvisio-doc
 - libvisio-tools
+
+License
+-------
+
+This software is licensed as CC-BA (Creative Commons By Attrbution)
+
+http://creativecommons.org/licenses/by/4.0/legalcode
 

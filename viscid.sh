@@ -133,7 +133,7 @@ check_docker_container() {
 
 check_work_dir() {
   if [ ! -d "$WORK_DIR" ]; then
-    mdkir -p "$WORK_DIR"
+    mkdir -p "$WORK_DIR"
   fi
   return
 }

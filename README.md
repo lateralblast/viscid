@@ -13,7 +13,7 @@ Current Version: 0.0.6
 Introduction
 ------------
 
-libvisio2svg cannot be compiled on MacOS, so this script uses a Linux docker container
+libvisio2svg cannot be compiled reliably on MacOS, especially on ARM, so this script uses a Linux docker container
 to do the conversion.
 
 If only the input file is specified, the script with create an output file with the input file name and add a .svg extension
